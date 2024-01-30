@@ -69,14 +69,72 @@ async function handleFileUpload(fileUrl, fileName) {
 }
 
 const allowedExtensions = new Set([
-  "txt", "js", "json", "md", "html", "css", "xml", "csv", "log", "py", "rb",
-  "java", "sh", "bat", "ps1", "cpp", "hpp", "h", "cs", "go", "sql", "toml",
-  "yaml", "ini", "config", "props", "properties", "dockerfile", "eslintrc",
-  "babelrc", "package", "lock", "json5", "vue", "jsx", "ts", "tsx", "graphql",
-  "mdx", "rest", "raml", "wsdl", "wadl", "proto", "thrift", "openapi", "rego",
-  "tf", "tfvars", "hcl", "nomad", "nomadfile", "sh", "zsh", "bash", "awk",
-  "sed", "awk", "vim", "gitconfig", "gitignore", "makefile", "dockerfile",
-  "jenkinsfile", "readme", "contributing"
+  "txt",
+  "js",
+  "json",
+  "md",
+  "html",
+  "css",
+  "xml",
+  "csv",
+  "log",
+  "py",
+  "rb",
+  "java",
+  "sh",
+  "bat",
+  "ps1",
+  "cpp",
+  "hpp",
+  "h",
+  "cs",
+  "go",
+  "sql",
+  "toml",
+  "yaml",
+  "ini",
+  "config",
+  "props",
+  "properties",
+  "dockerfile",
+  "eslintrc",
+  "babelrc",
+  "package",
+  "lock",
+  "json5",
+  "vue",
+  "jsx",
+  "ts",
+  "tsx",
+  "graphql",
+  "mdx",
+  "rest",
+  "raml",
+  "wsdl",
+  "wadl",
+  "proto",
+  "thrift",
+  "openapi",
+  "rego",
+  "tf",
+  "tfvars",
+  "hcl",
+  "nomad",
+  "nomadfile",
+  "sh",
+  "zsh",
+  "bash",
+  "awk",
+  "sed",
+  "awk",
+  "vim",
+  "gitconfig",
+  "gitignore",
+  "makefile",
+  "dockerfile",
+  "jenkinsfile",
+  "readme",
+  "contributing",
 ]);
 
 function isTextFile(file) {
@@ -392,9 +450,10 @@ async function shouldRespondToMessage(msg, cmd) {
 }
 
 function getCachedMessages(msg) {
-  const cache = msg.channel.type === 1 ? userMessageCache : channelMessageCache;
+  const cache =
+    msg.channel.type === "DM" ? userMessageCache : channelMessageCache;
   return (
-    cache.get(msg.channel.type === 1 ? msg.author.id : msg.channel.id) || []
+    cache.get(msg.channel.type === "DM" ? msg.author.id : msg.channel.id) || []
   );
 }
 
@@ -444,8 +503,9 @@ async function sendResponse(msg, response, sentMsg) {
 }
 
 function updateCache(msg, response) {
-  const cache = msg.channel.type === 1 ? userMessageCache : channelMessageCache;
-  const cacheId = msg.channel.type === 1 ? msg.author.id : msg.channel.id;
+  const cache =
+    msg.channel.type === "DM" ? userMessageCache : channelMessageCache;
+  const cacheId = msg.channel.type === "DM" ? msg.author.id : msg.channel.id;
 
   if (response.includes("Chloe has detected a bad prompt and will not reply")) {
     cache.set(cacheId, []);
